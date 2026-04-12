@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Analyses</h1>
+
+<div id="analyses">
+  <% @analyses.each do |analysis| %>
+    <%= render analysis %>
+    <p>
+      <%= link_to "Show this analysis", analysis %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New analysis", new_analysis_path %>

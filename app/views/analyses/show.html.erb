@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @analysis %>
+
+<div>
+  <%= link_to "Edit this analysis", edit_analysis_path(@analysis) %> |
+  <%= link_to "Back to analyses", analyses_path %>
+
+  <%= button_to "Destroy this analysis", @analysis, method: :delete %>
+</div>
