@@ -11,21 +11,21 @@ class Applicant < ApplicationRecord
   # - income: decimal (renda mensal)
   
   def cpf_valid?
-    cpf = cpf.to_s.gsub(/\D/, "")
+    cpf_clean = self.cpf.to_s.gsub(/\D/, "")
     
-    return false if cpf.length != 11
-    return false if cpf == cpf[0] * 11
+    return false if cpf_clean.length != 11
+    return false if cpf_clean == cpf_clean[0] * 11
     
-    sum = cpf[0..8].chars.each_with_index.sum { |digit, index| digit.to_i * (10 - index) }
+    sum = cpf_clean[0..8].chars.each_with_index.sum { |digit, index| digit.to_i * (10 - index) }
     first_digit = (sum * 10) % 11
     first_digit = 0 if first_digit >= 10
     
-    return false if first_digit != cpf[9].to_i
+    return false if first_digit != cpf_clean[9].to_i
     
-    sum = cpf[0..9].chars.each_with_index.sum { |digit, index| digit.to_i * (11 - index) }
+    sum = cpf_clean[0..9].chars.each_with_index.sum { |digit, index| digit.to_i * (11 - index) }
     second_digit = (sum * 10) % 11
     second_digit = 0 if second_digit >= 10
     
-    second_digit == cpf[10].to_i
+    second_digit == cpf_clean[10].to_i
   end
 end

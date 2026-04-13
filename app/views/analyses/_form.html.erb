@@ -1,8 +1,7 @@
-<%= form_with(model: analysis) do |form| %>
+<%= form_with(model: analysis, local: true) do |form| %>
   <% if analysis.errors.any? %>
-    <div style="color: red">
+    <div style="color: red; margin-bottom: 20px;">
       <h2><%= pluralize(analysis.errors.count, "error") %> prohibited this analysis from being saved:</h2>
-
       <ul>
         <% analysis.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,22 +10,30 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :applicant_id, style: "display: block" %>
-    <%= form.text_field :applicant_id %>
-  </div>
+  <% if @applicant %>
+    <!-- Se vem de um applicant específico, mostra seus dados -->
+    <div style="background-color: #e3f2fd; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <h3 style="margin: 0 0 10px 0; color: #0066cc;">Análise para:</h3>
+      <p style="margin: 5px 0; font-size: 16px; font-weight: bold; color: #333;">
+        <%= @applicant.name %>
+      </p>
+      <p style="margin: 5px 0; color: #666;">
+        CPF: <%= @applicant.cpf %>
+      </p>
+      <p style="margin: 5px 0; color: #666;">
+        Renda: R$ <%= number_with_precision(@applicant.income, precision: 2, delimiter: ',', separator: '.') %>
+      </p>
+      <%= form.hidden_field :applicant_id, value: @applicant.id %>
+    </div>
+  <% else %>
+    <!-- Se não tem applicant pré-selecionado, mostra dropdown -->
+    <div style="margin-bottom: 20px;">
+      <%= form.label :applicant_id, "Selecione um Solicitante", style: "display: block; margin-bottom: 8px; font-weight: bold;" %>
+      <%= form.collection_select :applicant_id, Applicant.all, :id, lambda { |a| "#{a.name} (CPF: #{a.cpf})" }, { prompt: "-- Escolha um solicitante --" } %>
+    </div>
+  <% end %>
 
   <div>
-    <%= form.label :score, style: "display: block" %>
-    <%= form.number_field :score %>
-  </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit "Gerar Análise", style: "padding: 10px 20px; background-color: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%;" %>
   </div>
 <% end %>

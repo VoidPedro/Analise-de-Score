@@ -1,10 +1,58 @@
-<h1>Editing analysis</h1>
+<div style="max-width: 600px; margin: 30px auto;">
+  <h1 style="color: #333; margin: 0 0 5px 0;">Editar Informações do Solicitante</h1>
+  <p style="margin: 0 0 25px 0; color: #666; font-size: 14px;">
+    Análise ID: #<%= @analysis.id %>
+  </p>
 
-<%= render "form", analysis: @analysis %>
+  <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; border-left: 4px solid #0066cc;">
+    <%= form_with(model: @analysis.applicant, url: applicant_path(@analysis.applicant), method: :patch, local: true) do |form| %>
+      <% if @analysis.applicant.errors.any? %>
+        <div style="color: red; margin-bottom: 20px;">
+          <h3 style="margin: 0 0 10px 0;"><%= pluralize(@analysis.applicant.errors.count, "erro") %> encontrado:</h3>
+          <ul style="margin: 0; padding-left: 20px;">
+            <% @analysis.applicant.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-<br>
+      <div style="margin-bottom: 20px;">
+        <%= form.label :name, "Nome", style: "display: block; margin-bottom: 8px; font-weight: bold;" %>
+        <%= form.text_field :name, 
+            style: "width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" %>
+      </div>
 
-<div>
-  <%= link_to "Show this analysis", @analysis %> |
-  <%= link_to "Back to analyses", analyses_path %>
+      <div style="margin-bottom: 20px;">
+        <%= form.label :cpf, "CPF", style: "display: block; margin-bottom: 8px; font-weight: bold;" %>
+        <%= form.text_field :cpf, 
+            style: "width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;", 
+            readonly: true %>
+        <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
+          ℹ️ CPF não pode ser alterado
+        </p>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <%= form.label :income, "Renda Mensal (R$)", style: "display: block; margin-bottom: 8px; font-weight: bold;" %>
+        <%= form.number_field :income, step: :any, 
+            style: "width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" %>
+        <p style="margin: 5px 0 0 0; color: #0066cc; font-size: 12px;">
+          ℹ️ Alterar a renda vai gerar um novo score na próxima análise
+        </p>
+      </div>
+
+      <div>
+        <%= form.submit "Salvar Alterações", 
+            style: "padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%;" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div style="margin-top: 20px; display: flex; gap: 10px;">
+    <%= link_to "Voltar para Análise", @analysis, 
+        style: "flex: 1; padding: 10px 20px; background-color: #666; color: white; text-decoration: none; border-radius: 4px; text-align: center; font-weight: bold;" %>
+    <%= link_to "Voltar para Histórico", applicant_analyses_path(@analysis.applicant), 
+        style: "flex: 1; padding: 10px 20px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 4px; text-align: center; font-weight: bold;" %>
+  </div>
 </div>

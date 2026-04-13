@@ -1,9 +1,16 @@
 class AnalysesController < ApplicationController
   before_action :set_analysis, only: %i[ show edit update destroy ]
+  before_action :set_applicant, only: [:index]
 
-  # GET /analyses or /analyses.json
+  # GET /analyses or /applicants/:applicant_id/analyses
   def index
-    @analyses = Analysis.all
+    if @applicant
+      # Se vem de /applicants/:applicant_id/analyses, mostra apenas análises daquele applicant
+      @analyses = @applicant.analyses.order(created_at: :desc)
+    else
+      # Se acessa /analyses, mostra todas (ou pode mudar para não permitir)
+      @analyses = Analysis.order(created_at: :desc)
+    end
   end
 
   # GET /analyses/1 or /analyses/1.json
@@ -13,6 +20,8 @@ class AnalysesController < ApplicationController
   # GET /analyses/new
   def new
     @analysis = Analysis.new
+    # Se vem com applicant_id, pré-seleciona
+    @applicant = Applicant.find(params[:applicant_id]) if params[:applicant_id]
   end
 
   # GET /analyses/1/edit
@@ -61,6 +70,11 @@ class AnalysesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_analysis
       @analysis = Analysis.find(params[:id])
+    end
+
+    # Carrega o applicant se vem de rota aninhada
+    def set_applicant
+      @applicant = Applicant.find(params[:applicant_id]) if params[:applicant_id]
     end
 
     # Only allow a list of trusted parameters through.

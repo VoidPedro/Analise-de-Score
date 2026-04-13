@@ -1,10 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @analysis %>
+<div style="max-width: 700px; margin: 30px auto;">
+  <%= render @analysis %>
 
-<div>
-  <%= link_to "Edit this analysis", edit_analysis_path(@analysis) %> |
-  <%= link_to "Back to analyses", analyses_path %>
-
-  <%= button_to "Destroy this analysis", @analysis, method: :delete %>
+  <div style="display: flex; gap: 10px; margin-top: 20px;">
+    <%= link_to "Editar", edit_analysis_path(@analysis), style: "padding: 10px 20px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;" %>
+    <%= link_to "Voltar", analyses_path, style: "padding: 10px 20px; background-color: #666; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;" %>
+    <%= button_to "Deletar", @analysis, method: :delete, style: "padding: 10px 20px; background-color: #cc0000; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;" %>
+  </div>
 </div>

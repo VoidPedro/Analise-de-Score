@@ -1,9 +1,23 @@
-<h1>New analysis</h1>
+<div style="max-width: 600px; margin: 30px auto;">
+  <div>
+    <h1 style="color: #333; margin: 0 0 5px 0;">Gerar Análise de Crédito</h1>
+    <% if @applicant %>
+      <p style="margin: 0; color: #666; font-size: 14px;">
+        Análise para: <strong><%= @applicant.name %></strong>
+      </p>
+    <% else %>
+      <p style="margin: 0; color: #666; font-size: 14px;">
+        Selecione um solicitante abaixo
+      </p>
+    <% end %>
+  </div>
 
-<%= render "form", analysis: @analysis %>
+  <div style="margin-top: 25px; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border-left: 4px solid #0066cc;">
+    <%= render "form", analysis: @analysis %>
+  </div>
 
-<br>
-
-<div>
-  <%= link_to "Back to analyses", analyses_path %>
+  <div style="margin-top: 20px;">
+    <%= link_to "← Voltar", @applicant ? applicant_path(@applicant) : root_path, 
+        style: "color: #0066cc; text-decoration: none;" %>
+  </div>
 </div>

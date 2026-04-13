@@ -1,21 +1,24 @@
-<div id="<%= dom_id applicant %>">
-  <p>
-    <strong>Name:</strong>
-    <%= applicant.name %>
-  </p>
+<div id="<%= dom_id applicant %>" style="border: 2px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px; background-color: #f9f9f9;">
+  <div style="margin-bottom: 15px;">
+    <h3 style="margin: 0 0 10px 0; color: #333;">
+      <%= applicant.name %>
+    </h3>
+    <p style="margin: 5px 0; color: #666;">
+      <strong>CPF:</strong> <%= applicant.cpf %>
+    </p>
+    <p style="margin: 5px 0; color: #666;">
+      <strong>Renda:</strong> R$ <%= number_with_precision(applicant.income, precision: 2, delimiter: ',', separator: '.') %>
+    </p>
+  </div>
 
-  <p>
-    <strong>Cpf:</strong>
-    <%= applicant.cpf %>
-  </p>
-
-  <p>
-    <strong>Income:</strong>
-    <%= applicant.income %>
-  </p>
-
-  <p>
-  <strong>Score:</strong>
-  <%= applicant.income %>
-  </p>
+  <div style="display: flex; gap: 10px;">
+    <%= link_to "Nova Análise", new_analysis_path(applicant_id: applicant.id), 
+        style: "flex: 1; padding: 10px 15px; background-color: #4CAF50; color: white; 
+                text-decoration: none; border-radius: 4px; text-align: center; 
+                font-weight: bold; cursor: pointer;" %>
+    <%= link_to "Ver Análises", applicant_analyses_path(applicant), 
+        style: "flex: 1; padding: 10px 15px; background-color: #0066cc; color: white; 
+                text-decoration: none; border-radius: 4px; text-align: center; 
+                font-weight: bold; cursor: pointer;" %>
+  </div>
 </div>

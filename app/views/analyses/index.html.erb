@@ -1,14 +1,53 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Analyses</h1>
-
-<div id="analyses">
-  <% @analyses.each do |analysis| %>
-    <%= render analysis %>
-    <p>
-      <%= link_to "Show this analysis", analysis %>
-    </p>
-  <% end %>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+  <div>
+    <% if @applicant %>
+      <h1 style="margin: 0;">Análises de <%= @applicant.name %></h1>
+      <p style="margin: 5px 0; color: #666; font-size: 14px;">
+        CPF: <%= @applicant.cpf %> | Renda: R$ <%= number_with_precision(@applicant.income, precision: 2, delimiter: ',', separator: '.') %>
+      </p>
+    <% else %>
+      <h1 style="margin: 0;">Todas as Análises</h1>
+    <% end %>
+  </div>
+  
+  <div style="display: flex; gap: 10px;">
+    <% if @applicant %>
+      <%= link_to "Nova Análise", new_analysis_path(applicant_id: @applicant.id), 
+          style: "padding: 10px 20px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;" %>
+      <%= link_to "Voltar", applicant_path(@applicant), 
+          style: "padding: 10px 20px; background-color: #666; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;" %>
+    <% else %>
+      <%= link_to "Nova Análise", new_analysis_path, 
+          style: "padding: 10px 20px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;" %>
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New analysis", new_analysis_path %>
+<% if @analyses.any? %>
+  <div id="analyses">
+    <% @analyses.each do |analysis| %>
+      <div style="margin-bottom: 10px;">
+        <%= render analysis %>
+        <div style="display: flex; gap: 10px; margin-top: -15px; padding: 0 20px;">
+          <%= link_to "Detalhes", analysis, style: "color: #0066cc; text-decoration: none; font-size: 14px;" %> |
+          <%= link_to "Editar", edit_analysis_path(analysis), style: "color: #0066cc; text-decoration: none; font-size: 14px;" %> |
+          <%= link_to "Deletar", analysis, method: :delete, data: { confirm: "Tem certeza?" }, style: "color: #cc0000; text-decoration: none; font-size: 14px;" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div style="background-color: #f0f0f0; padding: 40px; text-align: center; border-radius: 8px;">
+    <p style="font-size: 16px; color: #666;">
+      <% if @applicant %>
+        Nenhuma análise para <%= @applicant.name %> ainda.
+      <% else %>
+        Nenhuma análise criada ainda.
+      <% end %>
+    </p>
+    <%= link_to "Crie uma nova análise", @applicant ? new_analysis_path(applicant_id: @applicant.id) : new_analysis_path, 
+        style: "color: #0066cc; text-decoration: none; font-weight: bold;" %>
+  </div>
+<% end %>

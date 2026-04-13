@@ -1,17 +1,41 @@
-<div id="<%= dom_id analysis %>">
-  <p>
-    <strong>Applicant:</strong>
-    <%= analysis.applicant_id %>
-  </p>
+<div id="<%= dom_id analysis %>" style="border: 2px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px; background-color: #f9f9f9;">
+  <div style="margin-bottom: 15px;">
+    <h3 style="margin: 0 0 10px 0; color: #333;">
+      <%= link_to analysis.applicant.name, applicant_path(analysis.applicant) %>
+    </h3>
+    <p style="margin: 5px 0; color: #666;">
+      <strong>CPF:</strong> <%= analysis.applicant.cpf %>
+    </p>
+    <p style="margin: 5px 0; color: #666;">
+      <strong>Renda:</strong> R$ <%= number_with_precision(analysis.applicant.income, precision: 2, delimiter: ',', separator: '.') %>
+    </p>
+  </div>
 
-  <p>
-    <strong>Score:</strong>
-    <%= analysis.score %>
-  </p>
+  <div style="background-color: white; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+    <div style="margin-bottom: 10px;">
+      <strong style="font-size: 14px; color: #555;">Score de Crédito:</strong>
+      <div style="margin-top: 8px;">
+        <div style="background-color: #e0e0e0; border-radius: 4px; height: 30px; display: flex; align-items: center; width: 100%; position: relative;">
+          <div style="background-color: <%= analysis.score > 70 ? '#4CAF50' : '#f44336' %>; height: 100%; border-radius: 4px; width: <%= (analysis.score / 100.0) * 100 %>%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">
+            <%= analysis.score %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <p>
-    <strong>Status:</strong>
-    <%= analysis.status %>
-  </p>
-
+  <div style="display: flex; gap: 15px;">
+    <div style="flex: 1; padding: 15px; border-radius: 6px; background-color: <%= analysis.status == 'approved' ? '#e8f5e9' : '#ffebee' %>; text-align: center;">
+      <p style="margin: 0; font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Status</p>
+      <p style="margin: 0; font-size: 20px; font-weight: bold; color: <%= analysis.status == 'approved' ? '#2e7d32' : '#c62828' %>;">
+        <%= analysis.status == 'approved' ? '✓ APROVADO' : '✗ NEGADO' %>
+      </p>
+    </div>
+    <div style="flex: 1; padding: 15px; border-radius: 6px; background-color: #f5f5f5; text-align: center;">
+      <p style="margin: 0; font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Criada em</p>
+      <p style="margin: 0; font-size: 14px; color: #333;">
+        <%= l(analysis.created_at, format: :short) %>
+      </p>
+    </div>
+  </div>
 </div>
