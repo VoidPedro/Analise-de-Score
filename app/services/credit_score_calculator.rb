@@ -7,10 +7,12 @@ class CreditScoreCalculator
 
   def calculate
     score = 0
-    score += 50 if @income_at_analysis > 3000
+    score += 50 if @income_at_analysis >= 3000
+    score += 20 if @income_at_analysis >= 5000
     score += 30 if @cpf_valid_at_analysis
 
-    status = score > 70 ? "approved" : "denied"
+
+    status = score >= 70 ? "approved" : "denied"
 
     { score: score, status: status }
   end
