@@ -16,7 +16,7 @@
       <strong style="font-size: 14px; color: #555;">Score de Crédito:</strong>
       <div style="margin-top: 8px;">
         <div style="background-color: #e0e0e0; border-radius: 4px; height: 30px; display: flex; align-items: center; width: 100%; position: relative;">
-          <div style="background-color: <%= analysis.score > 70 ? '#4CAF50' : '#f44336' %>; height: 100%; border-radius: 4px; width: <%= (analysis.score / 100.0) * 100 %>%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">
+          <div style="background-color: <%= analysis.score >= 70 ? '#4CAF50' : '#f44336' %>; height: 100%; border-radius: 4px; width: <%= (analysis.score / 100.0) * 100 %>%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">
             <%= analysis.score %>
           </div>
         </div>

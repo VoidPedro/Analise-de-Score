@@ -16,7 +16,7 @@ class AnalysisTest < ActiveSupport::TestCase
   test "baixa renda invalido cpf" do
     applicant = Applicant.new(name: "Joao", cpf: @invalid_cpf, income: 2000)
     result = CreditScoreCalculator.new(applicant).calculate
-    assert_equal 5, result[:score]
+    assert_equal 0, result[:score]
   end
 
   test "media renda 3000 valido cpf" do
@@ -39,6 +39,12 @@ class AnalysisTest < ActiveSupport::TestCase
 
   test "alta renda 5000 valido cpf" do
     applicant = Applicant.new(name: "Carlos", cpf: @valid_cpf, income: 5000)
+    result = CreditScoreCalculator.new(applicant).calculate
+    assert_equal 100, result[:score]
+  end
+
+  test "alta renda 5000 cpf caracteres" do
+    applicant = Applicant.new(name: "Carlos", cpf: "qwerty12342", income: 5000)
     result = CreditScoreCalculator.new(applicant).calculate
     assert_equal 100, result[:score]
   end
