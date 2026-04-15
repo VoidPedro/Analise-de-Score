@@ -7,38 +7,36 @@ class ApplicantsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit applicants_url
-    assert_selector "h1", text: "Applicants"
+    assert_selector "h1", text: "Aplicantes"
   end
 
   test "should create applicant" do
     visit applicants_url
-    click_on "New applicant"
+    click_on "Novo Aplicante"
 
-    fill_in "Cpf", with: @applicant.cpf
-    fill_in "Income", with: @applicant.income
-    fill_in "Name", with: @applicant.name
-    click_on "Create Applicant"
+    fill_in "Nome", with: "João Silva"
+    fill_in "CPF (11 dígitos)", with: "52998224725"
+    fill_in "Renda Mensal (R$)", with: "5000"
+    click_on "Salvar"
 
     assert_text "Applicant was successfully created"
-    click_on "Back"
+    click_on "Voltar"
   end
 
   test "should update Applicant" do
     visit applicant_url(@applicant)
-    click_on "Edit this applicant", match: :first
+    click_on "Editar", match: :first
 
-    fill_in "Cpf", with: @applicant.cpf
-    fill_in "Income", with: @applicant.income
-    fill_in "Name", with: @applicant.name
-    click_on "Update Applicant"
+    fill_in "Nome", with: @applicant.name
+    fill_in "Renda Mensal (R$)", with: @applicant.income
+    click_on "Salvar Alterações"
 
     assert_text "Applicant was successfully updated"
-    click_on "Back"
   end
 
   test "should destroy Applicant" do
     visit applicant_url(@applicant)
-    click_on "Destroy this applicant", match: :first
+    click_on "Deletar", match: :first
 
     assert_text "Applicant was successfully destroyed"
   end

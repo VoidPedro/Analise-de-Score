@@ -7,38 +7,31 @@ class AnalysesTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit analyses_url
-    assert_selector "h1", text: "Analyses"
+    assert_selector "h1", text: "Todas as Análises"
   end
 
   test "should create analysis" do
     visit analyses_url
-    click_on "New analysis"
+    click_on "Nova Análise"
 
-    fill_in "Applicant", with: @analysis.applicant_id
-    fill_in "Score", with: @analysis.score
-    fill_in "Status", with: @analysis.status
-    click_on "Create Analysis"
+    select @analysis.applicant.name, from: "Selecione um Solicitante"
+    click_on "Gerar Análise"
 
     assert_text "Analysis was successfully created"
-    click_on "Back"
   end
 
   test "should update Analysis" do
     visit analysis_url(@analysis)
-    click_on "Edit this analysis", match: :first
+    click_on "Editar", match: :first
 
-    fill_in "Applicant", with: @analysis.applicant_id
-    fill_in "Score", with: @analysis.score
-    fill_in "Status", with: @analysis.status
-    click_on "Update Analysis"
+    click_on "Salvar Alterações"
 
     assert_text "Analysis was successfully updated"
-    click_on "Back"
   end
 
   test "should destroy Analysis" do
     visit analysis_url(@analysis)
-    click_on "Destroy this analysis", match: :first
+    click_on "Deletar", match: :first
 
     assert_text "Analysis was successfully destroyed"
   end
