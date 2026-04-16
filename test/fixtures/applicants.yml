@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  cpf: MyString
-  income: 9.99
+  name: Joao
+  cpf: "47123456789"
+  income: 3000
 
 two:
-  name: MyString
-  cpf: MyString
-  income: 9.99
+  name: Joana
+  cpf: "17033259504"
+  income: 5000

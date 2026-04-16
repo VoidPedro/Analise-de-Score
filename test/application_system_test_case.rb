@@ -38,4 +38,3 @@ end
 
 
 
-lógica de crédito

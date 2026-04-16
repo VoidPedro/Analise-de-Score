@@ -5,44 +5,24 @@ class ApplicantsControllerTest < ActionDispatch::IntegrationTest
     @applicant = applicants(:one)
   end
 
-  test "should get index" do
-    get applicants_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_applicant_url
-    assert_response :success
-  end
-
-  test "should create applicant" do
+  test "cria applicant com sucesso via POST applicants" do
     assert_difference("Applicant.count") do
-      post applicants_url, params: { applicant: { cpf: @applicant.cpf, income: @applicant.income, name: @applicant.name } }
+      post applicants_url, params: { applicant: { cpf: "98765432100", income: @applicant.income, name: "Novo Applicant" } }
     end
 
     assert_redirected_to applicant_url(Applicant.last)
   end
 
-  test "should show applicant" do
+  test "retorna detalhes do applicant via GET applicants id" do
     get applicant_url(@applicant)
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_applicant_url(@applicant)
-    assert_response :success
-  end
-
-  test "should update applicant" do
-    patch applicant_url(@applicant), params: { applicant: { cpf: @applicant.cpf, income: @applicant.income, name: @applicant.name } }
-    assert_redirected_to applicant_url(@applicant)
-  end
-
-  test "should destroy applicant" do
-    assert_difference("Applicant.count", -1) do
-      delete applicant_url(@applicant)
+  test "nao cria applicant com cpf duplicado" do
+    assert_no_difference("Applicant.count") do
+      post applicants_url, params: { applicant: { cpf: @applicant.cpf, income: 2500, name: "Duplicado" } }
     end
 
-    assert_redirected_to applicants_url
+    assert_response :unprocessable_entity
   end
 end

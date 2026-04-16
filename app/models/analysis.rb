@@ -10,13 +10,20 @@ class Analysis < ApplicationRecord
   private
   
   def calculate_credit_score
-    return if score.present? && status.present?
+    # Não recalcula se for um novo registro e já tiver score e status preenchidos
+    if new_record? && score.present? && status.present?
+      return
+    end
+    
+    if !applicant_id_changed? && score.present? && status.present?
+      return
+    end
+    
+    return if applicant.nil?
     
     calculator = CreditScoreCalculator.new(applicant)
     result = calculator.calculate
     self.score = result[:score]
     self.status = result[:status]
-  
-
   end
 end

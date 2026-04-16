@@ -5,10 +5,7 @@ class Applicant < ApplicationRecord
   validates :cpf, uniqueness: true, length: { is: 11 }
   validates :income, numericality: { greater_than_or_equal_to: 0 }
   validate :cpf_must_be_valid?
-  # Atributos principais:
-  # - name: string (nome do solicitante)
-  # - cpf: string (11 dígitos, sem formatação)
-  # - income: decimal (renda mensal)
+ 
   
   def cpf_valid?
     cpf_clean = self.cpf.to_s.gsub(/\D/, "")
